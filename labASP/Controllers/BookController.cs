@@ -50,6 +50,6 @@ public class BookController : Controller
     public IActionResult UserAgent() =>
         Content($"User-Agent: {Request.Headers.UserAgent}", "text/plain; charset=utf-8");
     
-    public IActionResult Health() => Json(new { status = "ok", time = DateTime.Now }, "application/json" );
+    public IActionResult Health() => Json(new { status = "ok", time = DateTime.Now } );
 
 }
