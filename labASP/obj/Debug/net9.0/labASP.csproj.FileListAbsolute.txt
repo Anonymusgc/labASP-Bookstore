@@ -94,3 +94,4 @@ D:\Programowanie\ASPnet\test\labASP\labASP\obj\Debug\net9.0\refint\labASP.dll
 D:\Programowanie\ASPnet\test\labASP\labASP\obj\Debug\net9.0\labASP.pdb
 D:\Programowanie\ASPnet\test\labASP\labASP\obj\Debug\net9.0\labASP.genruntimeconfig.cache
 D:\Programowanie\ASPnet\test\labASP\labASP\obj\Debug\net9.0\ref\labASP.dll
+D:\Programowanie\ASPnet\test\labASP\labASP\obj\Debug\net9.0\labASP.sourcelink.json
