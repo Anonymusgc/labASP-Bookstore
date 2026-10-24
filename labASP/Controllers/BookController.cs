@@ -1,3 +1,5 @@
+using System.Text;
+using labASP.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace labASP.Controllers;
@@ -16,4 +18,38 @@ public class BookController : Controller
         ViewBag.Id = id;
         return View();
     }
+    
+    
+    // (1) query string:  /Book/Echo?name=Ala&count=3
+    public IActionResult Echo([FromQuery] string name = "nieznajomy", [FromQuery] int count = 1) =>
+        Content(string.Join("\n", Enumerable.Repeat($"Cześć, {name}!", Math.Clamp(count, 1, 20))));
+
+    // (2) zmienna ścieżki:  /Book/Square/7   (segment {id} z domyślnej trasy)
+    public IActionResult Square(int id) => Content($"{id}^2 = {id * id}");
+
+    // (3) ciało żądania JSON:  POST /Book/Import
+    [HttpPost]
+    public IActionResult Import([FromBody] BookDto dto) =>
+        Json(new { received = dto.Title, dto.Isbn, dto.Price });
+
+    // (4) surowy obiekt Request
+    public IActionResult Inspect()
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine($"Method: {Request.Method}");
+        sb.AppendLine($"Path:   {Request.Path}{Request.QueryString}");
+        foreach (var h in Request.Headers) sb.AppendLine($"{h.Key}: {h.Value}");
+        return Content(sb.ToString(), "text/plain; charset=utf-8");
+    }
+
+    public IActionResult Sum(int a, int b)
+    {
+        return Content($"{a} + {b} = {a + b}", "text/plain; charset=utf-8");
+    }
+
+    public IActionResult UserAgent() =>
+        Content($"User-Agent: {Request.Headers.UserAgent}", "text/plain; charset=utf-8");
+    
+    public IActionResult Health() => Json(new { status = "ok", time = DateTime.Now }, "application/json" );
+
 }
