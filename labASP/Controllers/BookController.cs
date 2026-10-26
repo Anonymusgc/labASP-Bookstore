@@ -6,6 +6,10 @@ namespace labASP.Controllers;
 
 public class BookController : Controller
 {
+    public IActionResult Index() => View(BookStoreMemory.Books);
+    
+    
+    
     // GET /Book/Hello  → zwykły tekst
     public IActionResult Hello() => Content("Witaj w BookStore!", "text/plain; charset=utf-8");
 
