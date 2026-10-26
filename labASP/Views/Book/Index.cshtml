@@ -1,4 +1,15 @@
 @model List<Book>
+@{
+    ViewData["Title"] = "Lista książek";
+}
+@section Styles {
+    <style>
+        .table thead th {
+            background-color: #f8f8f8;
+            border-bottom: 2px solid blue;
+        }
+    </style>
+}
 <h2>Książki</h2>
 <a asp-action="Create" class="btn btn-primary mb-3">+ Dodaj książkę</a>
 <table class="table">
