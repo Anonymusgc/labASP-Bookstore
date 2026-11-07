@@ -33,7 +33,8 @@ public class BookController : Controller
     public IActionResult Status(int code = 200) => StatusCode(code);
 
     // GET /Book/Details/3 → widok
-    public IActionResult Details(int id)
+    [HttpGet("Book/Details/{id:int}")]
+    public async Task<IActionResult> Details(int id)
     {
         ViewBag.Id = id;
         return View();
