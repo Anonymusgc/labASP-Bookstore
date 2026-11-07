@@ -72,4 +72,20 @@ public class BookController : Controller
     
     public IActionResult Health() => Json(new { status = "ok", time = DateTime.Now } );
 
+    public async Task<IActionResult> ByYear(int year)
+    {
+         /* filtruj listę po roku, zwróć widok Index */
+         var filtered = BookStoreMemory.Books.Where(b => b.PublicationDate?.Year == year).ToList();
+         return View("Index", filtered);
+    }
+
+    public async Task<IActionResult> ByIsbn(string isbn)
+    {
+         /* znajdź książkę, przekieruj na Details lub NotFound() */
+         var book = BookStoreMemory.Books.FirstOrDefault(b => b.Isbn.Replace("-","") == isbn);
+         if (book == null) return NotFound();
+         return RedirectToAction(nameof(Details), new { id = book.Id });
+    }
+
+
 }
