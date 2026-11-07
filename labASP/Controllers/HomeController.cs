@@ -9,16 +9,6 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 namespace labASP.Controllers;
 
 
-public class RouteInfo
-{
-    public string Pattern { get; set; }
-    public string Action { get; set; }
-    public string Controller { get; set; }
-    
-    public string Methods { get; set; }
-    
-    public string Area { get; set; }
-}
 
 public class HomeController : Controller
 {
