@@ -28,6 +28,8 @@ public class HomeController : Controller
     {
         return View();
     }
+    
+    public IActionResult Docs(string? path) => Content($"Dokumentacja: {path}");
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

@@ -26,7 +26,9 @@ app.MapControllerRoute("books-by-isbn", "books/isbn/{isbn:regex(^\\d{{13}}$)}",
     new { controller = "Book", action = "ByIsbn" });                    // regex: dokładnie 13 cyfr
 app.MapControllerRoute("docs", "docs/{*path}",
     new { controller = "Home", action = "Docs" });                      // catch-all
+app.MapControllerRoute("admin-area", "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
 app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");   // segmenty opcjonalne
+
 
 
 
