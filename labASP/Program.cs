@@ -25,6 +25,9 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+app.UseStatusCodePagesWithReExecute("/Home/HttpStatus", "?code={0}");
+
 app.UseHttpsRedirection();
 app.UseRouting();
 

@@ -72,4 +72,20 @@ public class HomeController : Controller
         return View(routes);
     }
     
+    public IActionResult HttpStatus(int code)
+    {
+        Response.StatusCode = code;
+        ViewBag.StatusCode = code;
+        ViewBag.Message = code switch
+        {
+            403 => "Brak dostępu do zasobu (403 Forbidden).",
+            404 => "Nie znaleziono żądanej strony (404 Not Found).",
+            418 => "Jestem czajniczkiem (418 I'm a teapot).",
+            500 => "Wewnętrzny błąd serwera (500 Internal Server Error).",
+            _ => $"Wystąpił błąd HTTP o kodzie {code}."
+        };
+
+        return View();
+    }
+    
 }

@@ -1,0 +1,9 @@
+@{
+    ViewData["Title"] = $"Błąd {ViewBag.StatusCode}";
+}
+
+<div class="text-center mt-5">
+    <h1 class="display-4 text-danger">Błąd @ViewBag.StatusCode</h1>
+    <p class="lead">@ViewBag.Message</p>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-primary mt-3">Strona główna</a>
+</div>
