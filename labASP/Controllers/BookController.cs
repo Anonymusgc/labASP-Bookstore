@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace labASP.Controllers;
 
-[ServiceFilter(typeof(LogActionFilter))]
+[ServiceFilter(typeof(LogActionFilter), Order = 1)][MeasureTime(Order = 2)]
 public class BookController : Controller
 {
     public IActionResult Index() => View(BookStoreMemory.Books);
@@ -90,6 +90,16 @@ public class BookController : Controller
          var book = BookStoreMemory.Books.FirstOrDefault(b => b.Isbn.Replace("-","") == isbn);
          if (book == null) return NotFound();
          return RedirectToAction(nameof(Details), new { id = book.Id });
+    }
+    
+    public async Task<IActionResult> Archive(int year, int month)
+    {
+        var filtered = await Task.FromResult(
+            BookStoreMemory.Books.Where(b => b.PublicationDate?.Year == year).ToList()
+        );
+
+        ViewBag.FilterDescription = $"Archiwum dla roku {year} (miesiąc {month} pominięty w filtrze)";
+        return View("Index", filtered);
     }
 
 

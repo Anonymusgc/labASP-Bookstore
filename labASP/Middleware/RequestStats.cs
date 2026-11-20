@@ -5,7 +5,6 @@ namespace labASP.Middleware;
 public class RequestStats                 
 {
     private long _total;
-    // odczyt stanu licznika
     private readonly ConcurrentDictionary<string, long> _pathCounts = new(StringComparer.OrdinalIgnoreCase);
     public long Total => Interlocked.Read(ref _total);
     // inkrementacja licznika

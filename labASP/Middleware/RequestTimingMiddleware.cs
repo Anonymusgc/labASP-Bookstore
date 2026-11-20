@@ -14,8 +14,8 @@ public class RequestTimingMiddleware
     {
         var sw = Stopwatch.StartNew();
         var path = ctx.Request.Path.Value ?? "/";
-        var n = stats.Hit();
-        // nagłówki z licznikiem i czasem dodajem tuż przed odesłaniem odpowiedzi
+        var n = stats.Hit(ctx.Request.Path.Value ?? "/");
+        
         ctx.Response.OnStarting(() =>
         {
             ctx.Response.Headers["X-Elapsed-Ms"] = sw.ElapsedMilliseconds.ToString();

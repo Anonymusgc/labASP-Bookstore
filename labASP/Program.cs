@@ -42,6 +42,10 @@ app.MapControllerRoute("books-by-isbn", "books/isbn/{isbn:regex(^\\d{{13}}$)}",
 app.MapControllerRoute("docs", "docs/{*path}",
     new { controller = "Home", action = "Docs" });                      // catch-all
 app.MapControllerRoute("admin-area", "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "archive",
+    pattern: "archive/{year:int}/{month:int:range(1,12)}",
+    defaults: new { controller = "Book", action = "Archive" });
 app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");   // segmenty opcjonalne
 
 

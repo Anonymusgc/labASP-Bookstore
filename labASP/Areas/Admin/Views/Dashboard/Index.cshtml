@@ -1,11 +1,35 @@
 ﻿@{
     ViewData["Title"] = "Dashboard";
+    var topPaths = ViewBag.TopPaths as IEnumerable<KeyValuePair<string, long>>
+                   ?? Enumerable.Empty<KeyValuePair<string, long>>();
 }
 
 <div class="text-center">
     <h1 class="display-4">Dashboard</h1>
     <p>Witaj w panelu admina</p>
+    <p>Łączna liczba żądań: <strong>@ViewBag.TotalRequests</strong></p>
+    
     <a asp-area="Admin" asp-controller="Authors" asp-action="Index" class="btn btn-primary">Zarządzaj autorami</a>
     <a asp-area="" asp-controller="Book" asp-action="Index" class="btn btn-outline-secondary">Lista książek</a>
+    
+    <h3>Top 5 najpopularniejszych ścieżek</h3>
+    <table class="table table-bordered w-75">
+        <thead>
+        <tr>
+            <th>Ścieżka</th>
+            <th>Liczba żądań</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in topPaths)
+        {
+            <tr>
+                <td><code>@item.Key</code></td>
+                <td>@item.Value</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    
     <a  asp-area="" asp-controller="Home" asp-action="Index" > Powrót</a>
 </div>
