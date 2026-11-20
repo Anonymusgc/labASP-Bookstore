@@ -1,0 +1,31 @@
+@model IEnumerable<labASP.Models.Author>
+@{
+    ViewData["Title"] = "Lista autorów";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Autorzy</h1>
+    <a asp-area="Admin" asp-controller="Authors" asp-action="Create" class="btn btn-success">+ Dodaj autora</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Imię</th>
+        <th>Nazwisko</th>
+        <th>Kraj</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var author in Model)
+    {
+        <tr>
+            <td>@author.Id</td>
+            <td>@author.FirstName</td>
+            <td>@author.LastName</td>
+            <td>@author.Country</td>
+        </tr>
+    }
+    </tbody>
+</table>
