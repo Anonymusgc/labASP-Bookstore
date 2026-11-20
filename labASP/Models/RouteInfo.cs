@@ -9,4 +9,5 @@ public class RouteInfo
     public string Methods { get; set; }
     
     public string Area { get; set; }
+    
 }
