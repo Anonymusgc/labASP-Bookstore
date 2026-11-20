@@ -1,9 +1,11 @@
 using System.Text;
+using labASP.Filters;
 using labASP.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace labASP.Controllers;
 
+[ServiceFilter(typeof(LogActionFilter))]
 public class BookController : Controller
 {
     public IActionResult Index() => View(BookStoreMemory.Books);
@@ -73,6 +75,8 @@ public class BookController : Controller
     
     public IActionResult Health() => Json(new { status = "ok", time = DateTime.Now } );
 
+    public IActionResult Boom() => throw new InvalidOperationException("wyjątek z BookController");
+    
     public async Task<IActionResult> ByYear(int year)
     {
          /* filtruj listę po roku, zwróć widok Index */

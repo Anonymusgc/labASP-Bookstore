@@ -41,6 +41,8 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
     
+    public IActionResult Boom() => throw new InvalidOperationException("Celowy wyjątek");
+    
     public IActionResult Routes([FromServices] IActionDescriptorCollectionProvider provider)
     {
         var routes = provider.ActionDescriptors.Items.OfType<ControllerActionDescriptor>()

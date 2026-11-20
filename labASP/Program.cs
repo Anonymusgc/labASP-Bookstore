@@ -1,9 +1,21 @@
+using labASP.Filters;
+using labASP.Middleware;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<RequestStats>();
+builder.Services.AddScoped<LogActionFilter>();
+
+builder.Services.AddControllersWithViews(o =>
+{
+    o.Filters.Add<GlobalExceptionFilter>();
+});
 
 var app = builder.Build();
+
+app.UseMiddleware<RequestTimingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
