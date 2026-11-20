@@ -2,12 +2,9 @@
 
 public class RouteInfo
 {
-    public string Pattern { get; set; }
-    public string Action { get; set; }
-    public string Controller { get; set; }
-    
-    public string Methods { get; set; }
-    
-    public string Area { get; set; }
-    
+   public string Pattern { get; set; } = string.Empty;
+    public string Action { get; set; } = string.Empty;
+    public string Controller { get; set; } = string.Empty;
+    public string Methods { get; set; } = string.Empty;
+    public string? Area { get; set; }
 }

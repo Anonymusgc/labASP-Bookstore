@@ -1,0 +1,28 @@
+@model IEnumerable<labASP.Models.RouteInfo>
+@{
+    ViewData["Title"] = "Trasy aplikacji";
+}
+
+<h1>Tabela tras aplikacji</h1>
+
+<table class="table table-striped table-bordered">
+    <thead>
+    <tr>
+        <th>Adres</th>
+        <th>Obszar</th>
+        <th>Kontroler.Akcja</th>
+        <th>Metoda HTTP</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var r in Model)
+    {
+        <tr>
+            <td><code>@r.Pattern</code></td>
+            <td>@(r.Area ?? "-")</td>
+            <td>@r.Controller.@r.Action</td>
+            <td>@r.Methods</td>
+        </tr>
+    }
+    </tbody>
+</table>

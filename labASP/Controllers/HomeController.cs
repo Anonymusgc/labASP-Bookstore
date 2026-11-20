@@ -13,10 +13,14 @@ namespace labASP.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IActionDescriptorCollectionProvider _actionProvider;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(
+        ILogger<HomeController> logger,
+        IActionDescriptorCollectionProvider actionProvider)
     {
         _logger = logger;
+        _actionProvider = actionProvider;
     }
 
     public IActionResult Index()
@@ -42,19 +46,27 @@ public class HomeController : Controller
         var routes = provider.ActionDescriptors.Items.OfType<ControllerActionDescriptor>()
             .Select(r =>
             {
+                var area = r.RouteValues.TryGetValue("area", out var a) ? a : null;
+                var conventional = string.IsNullOrEmpty(area)
+                    ? $"{r.ControllerName}/{r.ActionName}"
+                    : $"{area}/{r.ControllerName}/{r.ActionName}";
+
+                var methods = string.Join(", ",
+                    r.ActionConstraints?.OfType<HttpMethodActionConstraint>()
+                        .SelectMany(c => c.HttpMethods ?? ["*"]) ?? Array.Empty<string>()
+                );
+
                 return new RouteInfo()
                 {
-                    Pattern = "/" + (r.AttributeRouteInfo?.Template ??
-                                     "Konwencjonalna"), // zbuduj trase konw, <area>/<controller>/<action>
+                    Pattern = "/" + (r.AttributeRouteInfo?.Template?.TrimStart('/') ?? conventional),
                     Action = r.ActionName,
                     Controller = r.ControllerName,
-                    Methods = string.Join(",",
-                        r.ActionConstraints?.OfType<HttpMethodActionConstraint>()
-                            .SelectMany(c => c.HttpMethods ?? ["*"]) ?? Array.Empty<string>()
-                    ),
-                    Area = r.RouteValues.TryGetValue("area", out var area) ? area : null
+                    Methods = string.IsNullOrEmpty(methods) ? "*" : methods,
+                    Area = area
                 };
-            });
+            }).OrderBy(r => r.Pattern)
+            .ThenBy(r => r.Methods)
+            .ToList();
         return View(routes);
     }
     
