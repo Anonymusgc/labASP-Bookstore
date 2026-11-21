@@ -8,7 +8,7 @@ namespace labASP.Controllers;
 [ServiceFilter(typeof(LogActionFilter), Order = 1)][MeasureTime(Order = 2)]
 public class BookController(IBookService service) : Controller
 {
-    public IActionResult Index() => View(BookStoreMemory.Books);
+    public IActionResult Index() => View(service.findAll());
     
     [HttpGet]
     public IActionResult Create () => View(new BookFormViewModel());
@@ -17,9 +17,8 @@ public class BookController(IBookService service) : Controller
     {
         if (!ModelState.IsValid) return View(vm);                // pokaż formularz ponownie z błędami
 
-        BookStoreMemory.Books.Add(new Book
+        service.Add(new Book
         {
-            Id = BookStoreMemory.Books.Max(b => b.Id) + 1,
             Title = vm.Title, Isbn = vm.Isbn, PublicationDate = vm.PublicationDate,
             NumPages = vm.NumPages, Price = vm.Price, Author = vm.Author
         });
@@ -38,6 +37,8 @@ public class BookController(IBookService service) : Controller
     [HttpGet("Book/Details/{id:int}")]
     public async Task<IActionResult> Details(int id)
     {
+        //var book = service.findByID();
+        
         ViewBag.Id = id;
         return View();
     }
@@ -87,7 +88,8 @@ public class BookController(IBookService service) : Controller
     public async Task<IActionResult> ByIsbn(string isbn)
     {
          /* znajdź książkę, przekieruj na Details lub NotFound() */
-         var book = BookStoreMemory.Books.FirstOrDefault(b => b.Isbn.Replace("-","") == isbn);
+         // tymczasowe rozw, metoda musi być w serwisie
+         var book = service.findAll().FirstOrDefault(b => b.Isbn.Replace("-","") == isbn);
          if (book == null) return NotFound();
          return RedirectToAction(nameof(Details), new { id = book.Id });
     }
