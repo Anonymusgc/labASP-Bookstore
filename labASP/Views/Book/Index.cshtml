@@ -1,4 +1,4 @@
-@model List<Book>
+@model IEnumerable<Book>
 @{
     ViewData["Title"] = "Lista książek";
     Layout = "_Layout";
@@ -24,7 +24,7 @@
 </table>
 
 @section Footer {
-    <span class="ms-3">| Liczba książek: @Model.Count</span>
+    <span class="ms-3">| Liczba książek: </span>
 }
 
 @section Scripts {
