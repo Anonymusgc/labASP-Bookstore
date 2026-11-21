@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace labASP.Models;
 
-public class Author
+public class Author // TD change to bookstorememory
 {
     public int Id { get; set; }
 

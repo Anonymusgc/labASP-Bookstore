@@ -1,9 +1,11 @@
 using labASP.Filters;
 using labASP.Middleware;
+using labASP.Models;
 using labASP.Models.Ef;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var connection = builder.Configuration["Database:ConnectionString"];
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -16,7 +18,8 @@ builder.Services.AddControllersWithViews(o =>
 });
 
 builder.Services.AddDbContext<BookDbContext>(o =>
-    o.UseSqlite(builder.Configuration.GetConnectionString("Default")));
+    o.UseSqlite(connection));
+builder.Services.AddScoped<IBookService, EfBookService>();
 
 var app = builder.Build();
 

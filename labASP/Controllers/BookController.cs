@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace labASP.Controllers;
 
 [ServiceFilter(typeof(LogActionFilter), Order = 1)][MeasureTime(Order = 2)]
-public class BookController : Controller
+public class BookController(IBookService service) : Controller
 {
     public IActionResult Index() => View(BookStoreMemory.Books);
     
