@@ -37,6 +37,7 @@ public class BookController(IBookService service) : Controller
     [HttpGet("Book/Details/{id:int}")]
     public async Task<IActionResult> Details(int id)
     {
+        // update żeby działało z service
         //var book = service.findByID();
         
         ViewBag.Id = id;
