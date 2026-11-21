@@ -1,5 +1,7 @@
 using labASP.Filters;
 using labASP.Middleware;
+using labASP.Models.Ef;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,9 @@ builder.Services.AddControllersWithViews(o =>
 {
     o.Filters.Add<GlobalExceptionFilter>();
 });
+
+builder.Services.AddDbContext<BookDbContext>(o =>
+    o.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 
 var app = builder.Build();
 
