@@ -26,6 +26,18 @@ public class BookController(IBookService service) : Controller
         TempData["Success"] = $"Dodano książkę „{vm.Title}”.";   // przetrwa jedno przekierowanie
         return RedirectToAction(nameof(Index));                   // PRG: F5 nie wyśle formularza drugi raz
     }
+
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        var book = service.findByID(id);
+        return View(book);
+    }
+    public IActionResult ConfirmDelete(BookDeleteViewModel vm)
+    {
+        service.Delete(vm.Id);
+        //return RedirectToPage(); To DO
+    }
     
     // GET /Book/Hello  → zwykły tekst
     public IActionResult Hello() => Content("Witaj w BookStore!", "text/plain; charset=utf-8");
@@ -38,10 +50,10 @@ public class BookController(IBookService service) : Controller
     public async Task<IActionResult> Details(int id)
     {
         // update żeby działało z service
-        //var book = service.findByID();
+        var book = service.findByID(id);
         
         ViewBag.Id = id;
-        return View();
+        return View(book);
     }
     
     
